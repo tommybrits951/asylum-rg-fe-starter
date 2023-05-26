@@ -41,15 +41,40 @@
     font-size: 1.2rem;
 }
 
-// .graphs-section {
-//  ADD THIS BACK IN WHEN YOU HAVE THE GRAPHS SECTION
-// }
+.graphs-section {
+    display: flex;
+    flex-direction: column;
 
+}
+.graphs-section-images {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.graphs-img-container {
+    margin-bottom: 5%;
+}
+.graph-section-img {
+    max-height: 25vh;
+    max-width: 100%;
+}
+.by-nationality {
+    margin-left: 10%;
+}
+.graphs-header {
+    text-align: center;
+    margin-top: 8%;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
 .view-more-data-btn-container {
     height: 44px;
-    width: 180px;
+    width: 310px;
     margin: 0 auto;
     text-align: center;
+    display: flex;
     margin-bottom: 10%;
 }
 
@@ -58,7 +83,9 @@
     justify-content: space-evenly;
     align-items: center;
 }
-
+.more-data-btn {
+    margin-right: 20%;
+}
 .hrf-img {
     height: 339px;
     width: 648px;
@@ -75,10 +102,38 @@
     font-size: 1.4rem;
 }
 
-// .bottom-section {
-//      ADD THIS BACK IN WHEN YOU HAVE A BOTTOM SECTION
-// }
-
+.bottom-section {
+    text-align: center;
+    margin-top: 10%;
+}
+.data-container {
+    display: flex;
+    justify-content: space-around;
+}
+.first-data-point-container, .second-data-point-container, .third-data-point-container {
+    margin-top: 10%;
+}
+h3 {
+    font-size: 1.2rem;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0 10%;
+}
+h2 {
+    font-size: 3.2rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+h1 {
+    font-size: 3.6rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+.more-btn {
+    background-color: #404C4A;
+    color: white;
+    border: none;
+    outline: none;
+    margin-top: 10%;
+    padding: 5px 14px;
+}
 .back-to-top {
     width: 8%;
     font-size: 1.2rem;
