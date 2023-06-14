@@ -18,6 +18,7 @@ const { background_color } = colors;
 
 function GraphWrapper(props) {
   const { set_view, dispatch } = props;
+
   let { office, view } = useParams();
   if (!view) {
     set_view('time-series');
@@ -50,7 +51,25 @@ function GraphWrapper(props) {
         break;
     }
   }
-  function updateStateWithNewData(years, view, office, stateSettingCallback) {
+  async function updateStateWithNewData(
+    years,
+    view,
+    office,
+    stateSettingCallback
+  ) {
+    const endPoint = `https://hrf-asylum-be-b.herokuapp.com/cases`;
+    const officeParams = {
+      params: {
+        from: years[0],
+        to: years[1],
+        office: office,
+      },
+    };
+    const defaultParams = {
+      from: years[0],
+      to: years[1],
+    };
+
     /*
           _                                                                             _
         |                                                                                 |
@@ -74,41 +93,48 @@ function GraphWrapper(props) {
     */
 
     if (office === 'all' || !office) {
-      axios
-        .get(`https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary`, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-          params: {
-            from: years[0],
-            to: years[1],
-          },
-        })
+      /*  Created variable for citizenship view data */
+      const citizen = await axios.get(
+        `${endPoint}/citizenshipSummary`,
+        defaultParams
+      );
+
+      const fiscal = await axios
+        .get(`${endPoint}/fiscalSummary`, defaultParams)
         .then(result => {
-          stateSettingCallback(view, office, result.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
+          const x = [];
+          /* Data from result wasn't an array fot the callback function so I created a array variable to push the data to. */
+          x.push(result.data);
+          /* then added citizen view data to the array. */
+          x[0].citizenshipResults = citizen.data;
+          return x;
         });
+      stateSettingCallback(view, office, fiscal);
     } else {
-      axios
-        .get(`https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary`, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-          params: {
-            from: years[0],
-            to: years[1],
-            office: office,
-          },
-        })
+      /*  Created variable for citizenship view data */
+      const citizen = await axios.get(
+        `${endPoint}/citizenshipSummary`,
+        officeParams
+      );
+
+      const fiscal = await axios
+        .get(`${endPoint}/fiscalSummary`, officeParams)
         .then(result => {
-          stateSettingCallback(view, office, result.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
+          const x = [];
+          /* Data from result wasn't an array fot the callback function so I created a array variable to push the data to. */
+          x.push(result.data);
+          /* then added citizen view data to the array. */
+          x[0].citizenshipResults = citizen.data;
+          return x;
         });
+      stateSettingCallback(view, office, fiscal);
     }
   }
+
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
   };
+
   return (
     <div
       className="map-wrapper-container"
