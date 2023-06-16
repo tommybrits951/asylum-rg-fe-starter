@@ -1,0 +1,12 @@
+.login-btn {
+    background-color: inherit;
+    color: white;
+    margin-left: 75px;
+    border: none;
+}
+.login-btn:hover {
+    cursor: pointer;
+}
+.profile {
+    text-align: center;
+}
