@@ -8,6 +8,7 @@ function Profile() {
   useEffect(() => {
     console.log(user);
   }, []);
+
   return (
     isAuthenticated && (
       <div className="profile">
